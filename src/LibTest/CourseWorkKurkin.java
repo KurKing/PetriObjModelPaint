@@ -25,15 +25,15 @@ public class CourseWorkKurkin {
           PetriNet mainChannel = NetLibrary.CreateNetChannel();
           PetriNet reservChannel = NetLibrary.CreateNetChannel();
           
-          PetriNet eventCreator = NetLibrary.CreateNetСreation();
+          PetriNet eventCreator = NetLibrary.CreateNetEventCreator();
           PetriNet failureCreator = NetLibrary.CreateNetFailure();
           
-//          // Connect is enable values
-//          failureCreator.getListP()[2] = mainChannel.getListP()[4];
-//          
-//          // Connect event creator
-//          eventCreator.getListP()[1] = mainChannel.getListP()[0];
-//          eventCreator.getListP()[1] = reservChannel.getListP()[0];
+          // Connect is enable values
+          failureCreator.getListP()[2] = eventCreator.getListP()[0];
+          
+          // Connect event creator
+          eventCreator.getListP()[4] = mainChannel.getListP()[2];
+          eventCreator.getListP()[3] = reservChannel.getListP()[2];
 
           ArrayList<PetriSim> list = new ArrayList<>();
           list.add(new PetriSim(mainChannel));
@@ -47,10 +47,10 @@ public class CourseWorkKurkin {
           model.go(timeModeling);
           
           System.out.print("\tRESULTS");
-          System.out.print("\nEvents created: " + eventCreator.getListP()[2].getMark());
+          System.out.print("\nEvents created: " + eventCreator.getListP()[6].getMark());
           System.out.print("\nFailure created: " + failureCreator.getListP()[3].getMark());
-          System.out.print("\nMain channel: " + mainChannel.getListP()[2].getMark());
-          System.out.print("\nReserv channel: " + reservChannel.getListP()[2].getMark());
+          System.out.print("\nMain channel: " + mainChannel.getListP()[1].getMark());
+          System.out.print("\nReserv channel: " + reservChannel.getListP()[1].getMark());
           System.out.print("\n");
       } 
 }

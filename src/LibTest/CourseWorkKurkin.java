@@ -5,6 +5,7 @@
 package LibTest;
 
 import LibNet.NetLibrary;
+import static LibTest.TestPetriObjSimulation.getModel;
 import PetriObj.ExceptionInvalidNetStructure;
 import PetriObj.ExceptionInvalidTimeDelay;
 import PetriObj.PetriNet;
@@ -21,28 +22,19 @@ public class CourseWorkKurkin {
     
       public static void main(String[] args) throws ExceptionInvalidTimeDelay, ExceptionInvalidNetStructure {
          
-          
-      } 
-            
-      public static PetriObjModel getModel() throws ExceptionInvalidTimeDelay, ExceptionInvalidNetStructure{
-                    
-          PetriNet mainChannel = NetLibrary.CreateNetChannel(0);
-          PetriNet reservChannel = NetLibrary.CreateNetChannel(2.0);
+          PetriNet mainChannel = NetLibrary.CreateNetChannel();
+          PetriNet reservChannel = NetLibrary.CreateNetChannel();
           
           PetriNet eventCreator = NetLibrary.CreateNetСreation();
           PetriNet failureCreator = NetLibrary.CreateNetFailure();
           
-//          list.get(0).getNet().getListP()[1] = list.get(1).getNet().getListP()[0]; //gen = > SMO1
-//          list.get(1).getNet().getListP()[2] = list.get(5).getNet().getListP()[0]; //SMO1 = > fork
-//
-//          list.get(5).getNet().getListP()[1] = list.get(2).getNet().getListP()[0]; //fork =>SMO2
-//          list.get(5).getNet().getListP()[2] = list.get(3).getNet().getListP()[0]; //fork =>SMO3
-//          list.get(5).getNet().getListP()[3] = list.get(4).getNet().getListP()[0]; //fork =>SMO4
-//
-//          list.get(2).getNet().getListP()[2] = list.get(1).getNet().getListP()[0]; //SMO2 => SMO1
-//          list.get(3).getNet().getListP()[2] = list.get(1).getNet().getListP()[0];//SMO3 => SMO1
-//          list.get(4).getNet().getListP()[2] = list.get(1).getNet().getListP()[0];//SMO4 => SMO1
-          
+//          // Connect is enable values
+//          failureCreator.getListP()[2] = mainChannel.getListP()[4];
+//          
+//          // Connect event creator
+//          eventCreator.getListP()[1] = mainChannel.getListP()[0];
+//          eventCreator.getListP()[1] = reservChannel.getListP()[0];
+
           ArrayList<PetriSim> list = new ArrayList<>();
           list.add(new PetriSim(mainChannel));
           list.add(new PetriSim(reservChannel));
@@ -50,6 +42,15 @@ public class CourseWorkKurkin {
           list.add(new PetriSim(failureCreator));
 
           PetriObjModel model = new PetriObjModel(list);
-          return model;
+          model.setIsProtokol(false);
+          double timeModeling = 1000;
+          model.go(timeModeling);
+          
+          System.out.print("\tRESULTS");
+          System.out.print("\nEvents created: " + eventCreator.getListP()[2].getMark());
+          System.out.print("\nFailure created: " + failureCreator.getListP()[3].getMark());
+          System.out.print("\nMain channel: " + mainChannel.getListP()[2].getMark());
+          System.out.print("\nReserv channel: " + reservChannel.getListP()[2].getMark());
+          System.out.print("\n");
       } 
 }

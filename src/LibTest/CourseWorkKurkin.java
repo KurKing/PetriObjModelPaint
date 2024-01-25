@@ -46,11 +46,23 @@ public class CourseWorkKurkin {
           double timeModeling = 1000;
           model.go(timeModeling);
           
-          System.out.print("\tRESULTS");
-          System.out.print("\nEvents created: " + eventCreator.getListP()[6].getMark());
-          System.out.print("\nFailure created: " + failureCreator.getListP()[3].getMark());
-          System.out.print("\nMain channel: " + mainChannel.getListP()[1].getMark());
-          System.out.print("\nReserv channel: " + reservChannel.getListP()[1].getMark());
-          System.out.print("\n");
+          System.out.println("RESULTS");
+          System.out.println("Events created: " + eventCreator.getListP()[6].getMark());
+          System.out.println("Failure created: " + failureCreator.getListP()[3].getMark());
+          
+          printChannelStats("MAIN", mainChannel, timeModeling);
+          printChannelStats("RESERVED", reservChannel, timeModeling);
       } 
+      
+    private static void printChannelStats(String name, PetriNet channel, double timeModeling) {
+        
+        int executed = channel.getListP()[1].getMark();
+        double workingTime = 7 * executed;
+        String locked = String.format("%.2f", Math.min(workingTime / timeModeling, 1.0) * 100) + "%";
+
+        System.out.println("\n"+name + " channel:");
+        System.out.println("\texecuted: "+executed);
+        System.out.println("\twork time total: "+workingTime);
+        System.out.println("\tlocked: "+locked);
+    }
 }

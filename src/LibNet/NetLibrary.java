@@ -916,4 +916,35 @@ public static PetriNet CreateNetСreation() throws ExceptionInvalidNetStructure,
 
         return d_Net;
     }
+public static PetriNet CreateNetFailure() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	ArrayList<PetriP> d_P = new ArrayList<>();
+	ArrayList<PetriT> d_T = new ArrayList<>();
+	ArrayList<ArcIn> d_In = new ArrayList<>();
+	ArrayList<ArcOut> d_Out = new ArrayList<>();
+	d_P.add(new PetriP("P3",1));
+	d_P.add(new PetriP("P4",0));
+	d_P.add(new PetriP("is enabled",1));
+	d_P.add(new PetriP("failure amount",0));
+	d_T.add(new PetriT("failure",200.0));
+	d_T.get(0).setDistribution("unif", d_T.get(0).getTimeServ());
+	d_T.get(0).setParamDeviation(35.0);
+	d_T.get(0).setPriority(2);
+	d_T.add(new PetriT("recovery",23.0));
+	d_T.get(1).setDistribution("unif", d_T.get(1).getTimeServ());
+	d_T.get(1).setParamDeviation(7.0);
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(2),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(2),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(3),1));
+	PetriNet d_Net = new PetriNet("failure",d_P,d_T,d_In,d_Out);
+	PetriP.initNext();
+	PetriT.initNext();
+	ArcIn.initNext();
+	ArcOut.initNext();
+
+	return d_Net;
+    }
 }

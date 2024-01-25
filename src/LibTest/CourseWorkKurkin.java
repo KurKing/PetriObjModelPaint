@@ -32,9 +32,15 @@ public class CourseWorkKurkin {
           failureCreator.getListP()[2] = eventCreator.getListP()[0];
           
           // Connect event creator
-          eventCreator.getListP()[4] = mainChannel.getListP()[2];
-          eventCreator.getListP()[3] = reservChannel.getListP()[2];
-
+          eventCreator.getListP()[4] = mainChannel.getListP()[4];
+          eventCreator.getListP()[3] = reservChannel.getListP()[4];
+          
+          // Is enabled connector for main channel
+          mainChannel.getListP()[3] = eventCreator.getListP()[0];
+          
+          // Event return connector
+          mainChannel.getListP()[0] = eventCreator.getListP()[2];
+          
           ArrayList<PetriSim> list = new ArrayList<>();
           list.add(new PetriSim(mainChannel));
           list.add(new PetriSim(reservChannel));
@@ -43,6 +49,7 @@ public class CourseWorkKurkin {
 
           PetriObjModel model = new PetriObjModel(list);
           model.setIsProtokol(false);
+          
           double timeModeling = 1000;
           model.go(timeModeling);
           
@@ -62,6 +69,7 @@ public class CourseWorkKurkin {
 
         System.out.println("\n"+name + " channel:");
         System.out.println("\texecuted: "+executed);
+        System.out.println("\tfailures: "+channel.getListP()[5].getMark());
         System.out.println("\twork time total: "+workingTime);
         System.out.println("\tlocked: "+locked);
     }

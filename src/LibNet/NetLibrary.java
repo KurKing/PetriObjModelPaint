@@ -893,4 +893,27 @@ public static PetriNet CreateNetSMOgroup(int numInGroup,int numChannel, double t
         return d_Net;
     }
 
+public static PetriNet CreateNetСreation() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+        ArrayList<PetriP> d_P = new ArrayList<>();
+        ArrayList<PetriT> d_T = new ArrayList<>();
+        ArrayList<ArcIn> d_In = new ArrayList<>();
+        ArrayList<ArcOut> d_Out = new ArrayList<>();
+        d_P.add(new PetriP("P6",1));
+        d_P.add(new PetriP("P11",0));
+        d_P.add(new PetriP("created amount",0));
+        d_T.add(new PetriT("event create",9.0));
+        d_T.get(0).setDistribution("unif", d_T.get(0).getTimeServ());
+        d_T.get(0).setParamDeviation(4.0);
+        d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+        d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+        d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),1));
+        d_Out.add(new ArcOut(d_T.get(0),d_P.get(2),1));
+        PetriNet d_Net = new PetriNet("creation",d_P,d_T,d_In,d_Out);
+        PetriP.initNext();
+        PetriT.initNext();
+        ArcIn.initNext();
+        ArcOut.initNext();
+
+        return d_Net;
+    }
 }

@@ -947,7 +947,7 @@ public static PetriNet CreateNetFailure() throws ExceptionInvalidNetStructure, E
 
 	return d_Net;
     }
-public static PetriNet CreateNetChannel() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+public static PetriNet CreateNetChannel(double activationTime) throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
 	ArrayList<PetriP> d_P = new ArrayList<>();
 	ArrayList<PetriT> d_T = new ArrayList<>();
 	ArrayList<ArcIn> d_In = new ArrayList<>();
@@ -957,7 +957,7 @@ public static PetriNet CreateNetChannel() throws ExceptionInvalidNetStructure, E
 	d_P.add(new PetriP("events",0));
 	d_P.add(new PetriP("P2",0));
 	d_P.add(new PetriP("is enabled",1));
-	d_T.add(new PetriT("turn on",2.0));
+	d_T.add(new PetriT("turn on",activationTime));
 	d_T.add(new PetriT("execute",7.0));
 	d_T.get(1).setDistribution("unif", d_T.get(1).getTimeServ());
 	d_T.get(1).setParamDeviation(3.0);

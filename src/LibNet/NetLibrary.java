@@ -893,4 +893,53 @@ public static PetriNet CreateNetSMOgroup(int numInGroup,int numChannel, double t
         return d_Net;
     }
 
+public static PetriNet CreateNetcamera() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	ArrayList<PetriP> d_P = new ArrayList<>();
+	ArrayList<PetriT> d_T = new ArrayList<>();
+	ArrayList<ArcIn> d_In = new ArrayList<>();
+	ArrayList<ArcOut> d_Out = new ArrayList<>();
+	d_P.add(new PetriP("Image generator",1));
+	d_P.add(new PetriP("Server buffer",0));
+	d_T.add(new PetriT("Camera",10.0));
+	d_T.get(0).setDistribution("exp", d_T.get(0).getTimeServ());
+	d_T.get(0).setParamDeviation(0.0);
+	d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),6));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+	PetriNet d_Net = new PetriNet("camera",d_P,d_T,d_In,d_Out);
+	PetriP.initNext();
+	PetriT.initNext();
+	ArcIn.initNext();
+	ArcOut.initNext();
+
+	return d_Net;
+}
+public static PetriNet CreateNetfullServer() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	ArrayList<PetriP> d_P = new ArrayList<>();
+	ArrayList<PetriT> d_T = new ArrayList<>();
+	ArrayList<ArcIn> d_In = new ArrayList<>();
+	ArrayList<ArcOut> d_Out = new ArrayList<>();
+	d_P.add(new PetriP("Server buffer",0));
+	d_P.add(new PetriP("Ready to save",0));
+	d_P.add(new PetriP("Saved",0));
+	d_P.add(new PetriP("Filter BD",1));
+	d_P.add(new PetriP("Image filter",100));
+	d_T.add(new PetriT("image execute",2.0));
+	d_T.add(new PetriT("Save",0.01));
+	d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+	d_In.add(new ArcIn(d_P.get(4),d_T.get(0),1));
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(3),d_T.get(1),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(4),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(2),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(3),1));
+	PetriNet d_Net = new PetriNet("full  version",d_P,d_T,d_In,d_Out);
+	PetriP.initNext();
+	PetriT.initNext();
+	ArcIn.initNext();
+	ArcOut.initNext();
+
+	return d_Net;
+}
 }

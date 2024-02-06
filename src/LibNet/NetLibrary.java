@@ -675,4 +675,92 @@ public class NetLibrary {
 
 		return d_Net;
 	}
+        
+    public static PetriNet CreateRobotNetDetailCreator() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	
+        ArrayList<PetriP> d_P = new ArrayList<>();
+		ArrayList<PetriT> d_T = new ArrayList<>();
+		ArrayList<ArcIn> d_In = new ArrayList<>();
+		ArrayList<ArcOut> d_Out = new ArrayList<>();
+		d_P.add(new PetriP("Detail creation",1));
+		d_P.add(new PetriP("Detail income",0));
+		d_T.add(new PetriT("Creation delay",40.0));
+		d_T.get(0).setDistribution("exp", d_T.get(0).getTimeServ());
+		d_T.get(0).setParamDeviation(0.0);
+		d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+		d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),1));
+		d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+		PetriNet d_Net = new PetriNet("lab5_2",d_P,d_T,d_In,d_Out);
+		PetriP.initNext();
+		PetriT.initNext();
+		ArcIn.initNext();
+		ArcOut.initNext();
+
+		return d_Net;
+    }
+    
+    public static PetriNet CreateRobotNetRobot() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	
+        ArrayList<PetriP> d_P = new ArrayList<>();
+		ArrayList<PetriT> d_T = new ArrayList<>();
+		ArrayList<ArcIn> d_In = new ArrayList<>();
+		ArrayList<ArcOut> d_Out = new ArrayList<>();
+		d_P.add(new PetriP("Detail income",0));
+		d_P.add(new PetriP("Robot enabled",1));
+		d_P.add(new PetriP("Pregrip",0));
+		d_P.add(new PetriP("Hold",0));
+		d_P.add(new PetriP("Finish",0));
+		d_P.add(new PetriP("Empty",0));
+		d_P.add(new PetriP("Full",0));
+		d_T.add(new PetriT("Robot start",0.0));
+		d_T.add(new PetriT("Grip",8.0));
+		d_T.get(1).setDistribution("norm", d_T.get(1).getTimeServ());
+		d_T.get(1).setParamDeviation(1.0);
+		d_T.add(new PetriT("Release",8.0));
+		d_T.get(2).setDistribution("norm", d_T.get(2).getTimeServ());
+		d_T.get(2).setParamDeviation(1.0);
+		d_T.add(new PetriT("Drive",6.0));
+		d_T.add(new PetriT("Drive",6.0));
+		d_In.add(new ArcIn(d_P.get(1),d_T.get(0),1));
+		d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+		d_In.add(new ArcIn(d_P.get(2),d_T.get(1),1));
+		d_In.add(new ArcIn(d_P.get(3),d_T.get(3),1));
+		d_In.add(new ArcIn(d_P.get(6),d_T.get(2),1));
+		d_In.add(new ArcIn(d_P.get(5),d_T.get(4),1));
+		d_Out.add(new ArcOut(d_T.get(0),d_P.get(2),1));
+		d_Out.add(new ArcOut(d_T.get(1),d_P.get(3),1));
+		d_Out.add(new ArcOut(d_T.get(2),d_P.get(4),1));
+		d_Out.add(new ArcOut(d_T.get(3),d_P.get(6),1));
+		d_Out.add(new ArcOut(d_T.get(2),d_P.get(5),1));
+		d_Out.add(new ArcOut(d_T.get(4),d_P.get(1),1));
+		PetriNet d_Net = new PetriNet("lab5_2",d_P,d_T,d_In,d_Out);
+		PetriP.initNext();
+		PetriT.initNext();
+		ArcIn.initNext();
+		ArcOut.initNext();
+
+		return d_Net;
+    }
+    
+    public static PetriNet CreateRobotNetExecutor(double time) throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+
+		ArrayList<PetriP> d_P = new ArrayList<>();
+		ArrayList<PetriT> d_T = new ArrayList<>();
+		ArrayList<ArcIn> d_In = new ArrayList<>();
+		ArrayList<ArcOut> d_Out = new ArrayList<>();
+		d_P.add(new PetriP("Pre executor",0));
+		d_P.add(new PetriP("Ready",0));
+		d_T.add(new PetriT("Executor",time));
+		d_T.get(0).setDistribution("norm", d_T.get(0).getTimeServ());
+		d_T.get(0).setParamDeviation(10.0);
+		d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+		d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),1));
+		PetriNet d_Net = new PetriNet("lab5_2",d_P,d_T,d_In,d_Out);
+		PetriP.initNext();
+		PetriT.initNext();
+		ArcIn.initNext();
+		ArcOut.initNext();
+
+		return d_Net;
+    }
 }

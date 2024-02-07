@@ -24,6 +24,7 @@ public class Lab6Task2 {
     public static void main(String[] args) throws ExceptionInvalidTimeDelay, ExceptionInvalidNetStructure {
         
         System.out.println("\t  ### Time modelling: 1000 ###");
+        System.out.println("Create Execute Move LastMove Executed Returned");
         
         for (TaskParameters param: modellingList()) {
             
@@ -34,13 +35,13 @@ public class Lab6Task2 {
         
             runModel(net);
             
-            System.out.print(param.getCreationTime()+"; "+
-                    param.getExecutionTime()+"; "+
-                    param.getMoveTime()+"; "+
+            System.out.print(param.getCreationTime()+" \t"+
+                    param.getExecutionTime()+" \t"+
+                    param.getMoveTime()+" \t"+
                     param.getLastMoveTime());
 
-            System.out.print("; Executed: "+net.getListP()[3].getMark());
-            System.out.println("; Returned: "+net.getListP()[12].getMark());
+            System.out.print("\t"+net.getListP()[3].getMark());
+            System.out.println("\t"+net.getListP()[12].getMark());
         }
     }
     

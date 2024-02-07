@@ -763,4 +763,97 @@ public class NetLibrary {
 
 		return d_Net;
     }
+    
+    public static PetriNet CreateBusNetStop() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	
+        ArrayList<PetriP> d_P = new ArrayList<>();
+	ArrayList<PetriT> d_T = new ArrayList<>();
+	ArrayList<ArcIn> d_In = new ArrayList<>();
+	ArrayList<ArcOut> d_Out = new ArrayList<>();
+	d_P.add(new PetriP("Creator",1));
+	d_P.add(new PetriP("Bus station",0));
+	d_P.add(new PetriP("Filter",30));
+	d_P.add(new PetriP("Failure",0));
+	d_P.add(new PetriP("Queue",0));
+	d_T.add(new PetriT("Create",0.5));
+	d_T.get(0).setDistribution("norm", d_T.get(0).getTimeServ());
+	d_T.get(0).setParamDeviation(0.2);
+	d_T.add(new PetriT("To queue",0.0));
+	d_T.get(1).setPriority(1);
+	d_T.add(new PetriT("To fail",0.0));
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(2),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(2),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(4),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(2),d_P.get(3),1));
+	PetriNet d_Net = new PetriNet("lab5_3with_sum",d_P,d_T,d_In,d_Out);
+	PetriP.initNext();
+	PetriT.initNext();
+	ArcIn.initNext();
+	ArcOut.initNext();
+
+	return d_Net;
+    }   
+    
+    public static PetriNet CreateBusNetBus(boolean isPlacesOnInitEnabled) throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	ArrayList<PetriP> d_P = new ArrayList<>();
+	ArrayList<PetriT> d_T = new ArrayList<>();
+	ArrayList<ArcIn> d_In = new ArrayList<>();
+	ArrayList<ArcOut> d_Out = new ArrayList<>();
+	d_P.add(new PetriP("Filter",30));
+	d_P.add(new PetriP("NB", isPlacesOnInitEnabled ? 25 : 0));
+	d_P.add(new PetriP("Queue",0));
+	d_P.add(new PetriP("NA", isPlacesOnInitEnabled ? 25 : 0));
+	d_P.add(new PetriP("Bus A",0));
+	d_P.add(new PetriP("Bus B",0));
+	d_P.add(new PetriP("Finish",0));
+	d_P.add(new PetriP("Finish",0));
+	d_P.add(new PetriP("NB2",0));
+	d_P.add(new PetriP("NA2",0));
+	d_P.add(new PetriP("Total A1",0));
+	d_P.add(new PetriP("Total B1",0));
+	d_T.add(new PetriT("To A",0.0));
+	d_T.get(0).setPriority(1);
+	d_T.add(new PetriT("To B",0.0));
+	d_T.add(new PetriT("Drive",20.0));
+	d_T.get(2).setDistribution("norm", d_T.get(2).getTimeServ());
+	d_T.get(2).setParamDeviation(5.0);
+	d_T.add(new PetriT("Drive",30.0));
+	d_T.get(3).setDistribution("norm", d_T.get(3).getTimeServ());
+	d_T.get(3).setParamDeviation(5.0);
+	d_T.add(new PetriT("Leave",5.0));
+	d_T.get(4).setDistribution("norm", d_T.get(4).getTimeServ());
+	d_T.get(4).setParamDeviation(1.0);
+	d_T.add(new PetriT("Leave",5.0));
+	d_T.get(5).setDistribution("norm", d_T.get(5).getTimeServ());
+	d_T.get(5).setParamDeviation(1.0);
+	d_In.add(new ArcIn(d_P.get(2),d_T.get(0),1));
+	d_In.add(new ArcIn(d_P.get(3),d_T.get(0),1));
+	d_In.add(new ArcIn(d_P.get(5),d_T.get(3),25));
+	d_In.add(new ArcIn(d_P.get(4),d_T.get(2),25));
+	d_In.add(new ArcIn(d_P.get(6),d_T.get(5),1));
+	d_In.add(new ArcIn(d_P.get(7),d_T.get(4),1));
+	d_In.add(new ArcIn(d_P.get(2),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(1),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(4),1));
+	d_Out.add(new ArcOut(d_T.get(3),d_P.get(7),1));
+	d_Out.add(new ArcOut(d_T.get(2),d_P.get(6),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(5),1));
+	d_Out.add(new ArcOut(d_T.get(4),d_P.get(8),25));
+	d_Out.add(new ArcOut(d_T.get(5),d_P.get(9),25));
+	d_Out.add(new ArcOut(d_T.get(4),d_P.get(11),25));
+	d_Out.add(new ArcOut(d_T.get(5),d_P.get(10),25));
+	PetriNet d_Net = new PetriNet("lab5_3with_sum",d_P,d_T,d_In,d_Out);
+	PetriP.initNext();
+	PetriT.initNext();
+	ArcIn.initNext();
+	ArcOut.initNext();
+
+	return d_Net;
+    }
 }

@@ -699,7 +699,7 @@ public class NetLibrary {
 		return d_Net;
     }
     
-    public static PetriNet CreateRobotNetRobot() throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+    public static PetriNet CreateRobotNetRobot(double driveTime) throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
 	
         ArrayList<PetriP> d_P = new ArrayList<>();
 		ArrayList<PetriT> d_T = new ArrayList<>();
@@ -719,8 +719,8 @@ public class NetLibrary {
 		d_T.add(new PetriT("Release",8.0));
 		d_T.get(2).setDistribution("norm", d_T.get(2).getTimeServ());
 		d_T.get(2).setParamDeviation(1.0);
-		d_T.add(new PetriT("Drive",6.0));
-		d_T.add(new PetriT("Drive",6.0));
+		d_T.add(new PetriT("Drive",driveTime));
+		d_T.add(new PetriT("Drive",driveTime));
 		d_In.add(new ArcIn(d_P.get(1),d_T.get(0),1));
 		d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
 		d_In.add(new ArcIn(d_P.get(2),d_T.get(1),1));

@@ -31,11 +31,11 @@ public class Lab7 {
         ArrayList<PetriSim> list = new ArrayList<>();
           
         PetriNet creator = NetLibrary.CreateRobotNetDetailCreator();        
-        PetriNet robot1 = NetLibrary.CreateRobotNetRobot();
+        PetriNet robot1 = NetLibrary.CreateRobotNetRobot(6.0);
         PetriNet executor1 = NetLibrary.CreateRobotNetExecutor(60);
-        PetriNet robot2 = NetLibrary.CreateRobotNetRobot();
+        PetriNet robot2 = NetLibrary.CreateRobotNetRobot(7.0);
         PetriNet executor2 = NetLibrary.CreateRobotNetExecutor(100);
-        PetriNet robot3 = NetLibrary.CreateRobotNetRobot();
+        PetriNet robot3 = NetLibrary.CreateRobotNetRobot(5.0);
 
         creator.getListP()[1] = robot1.getListP()[0];
         robot1.getListP()[4] = executor1.getListP()[0];

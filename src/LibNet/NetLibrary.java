@@ -856,4 +856,110 @@ public class NetLibrary {
 
 	return d_Net;
     }
+
+    public static PetriNet CreateNetLab6Task2(double creationTime,
+                                              double executionTime,
+                                              double moveTime,
+                                              double lastMoveTime) 
+            throws ExceptionInvalidNetStructure, ExceptionInvalidTimeDelay {
+	
+        ArrayList<PetriP> d_P = new ArrayList<>();
+	ArrayList<PetriT> d_T = new ArrayList<>();
+	ArrayList<ArcIn> d_In = new ArrayList<>();
+	ArrayList<ArcOut> d_Out = new ArrayList<>();
+	d_P.add(new PetriP("Creator",1));
+	d_P.add(new PetriP("Events",0));
+	d_P.add(new PetriP("Events1",0));
+	d_P.add(new PetriP("All",0));
+	d_P.add(new PetriP("Events2",0));
+	d_P.add(new PetriP("Events",0));
+	d_P.add(new PetriP("Events",0));
+	d_P.add(new PetriP("Events3",0));
+	d_P.add(new PetriP("Events",0));
+	d_P.add(new PetriP("Events4",0));
+	d_P.add(new PetriP("Events5",0));
+	d_P.add(new PetriP("Events",0));
+	d_P.add(new PetriP("Returned",0));
+	d_P.add(new PetriP("Created",0));
+	d_P.add(new PetriP("Filter",1));
+	d_P.add(new PetriP("Filter",1));
+	d_P.add(new PetriP("Filter",1));
+	d_P.add(new PetriP("Filter",1));
+	d_P.add(new PetriP("Filter",1));
+	d_T.add(new PetriT("CreateT",creationTime));
+	d_T.get(0).setDistribution("exp", d_T.get(0).getTimeServ());
+	d_T.get(0).setParamDeviation(0.0);
+	d_T.add(new PetriT("Executor",executionTime));
+	d_T.get(1).setDistribution("exp", d_T.get(1).getTimeServ());
+	d_T.get(1).setParamDeviation(0.0);
+	d_T.get(1).setPriority(1);
+	d_T.add(new PetriT("ToNext",moveTime));
+	d_T.add(new PetriT("ToNext",moveTime));
+	d_T.add(new PetriT("Executor",executionTime));
+	d_T.get(4).setDistribution("exp", d_T.get(4).getTimeServ());
+	d_T.get(4).setParamDeviation(0.0);
+	d_T.get(4).setPriority(1);
+	d_T.add(new PetriT("ToNext",moveTime));
+	d_T.add(new PetriT("Executor",executionTime));
+	d_T.get(6).setDistribution("exp", d_T.get(6).getTimeServ());
+	d_T.get(6).setParamDeviation(0.0);
+	d_T.get(6).setPriority(1);
+	d_T.add(new PetriT("ToNext",moveTime));
+	d_T.add(new PetriT("Executor",executionTime));
+	d_T.get(8).setDistribution("exp", d_T.get(8).getTimeServ());
+	d_T.get(8).setParamDeviation(0.0);
+	d_T.get(8).setPriority(1);
+	d_T.add(new PetriT("Executor",executionTime));
+	d_T.get(9).setDistribution("exp", d_T.get(9).getTimeServ());
+	d_T.get(9).setParamDeviation(0.0);
+	d_T.get(9).setPriority(1);
+	d_T.add(new PetriT("ToNext",lastMoveTime));
+	d_In.add(new ArcIn(d_P.get(11),d_T.get(10),1));
+	d_In.add(new ArcIn(d_P.get(0),d_T.get(0),1));
+	d_In.add(new ArcIn(d_P.get(5),d_T.get(3),1));
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(2),1));
+	d_In.add(new ArcIn(d_P.get(1),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(14),d_T.get(1),1));
+	d_In.add(new ArcIn(d_P.get(11),d_T.get(9),1));
+	d_In.add(new ArcIn(d_P.get(17),d_T.get(9),1));
+	d_In.add(new ArcIn(d_P.get(5),d_T.get(4),1));
+	d_In.add(new ArcIn(d_P.get(15),d_T.get(4),1));
+	d_In.add(new ArcIn(d_P.get(6),d_T.get(5),1));
+	d_In.add(new ArcIn(d_P.get(6),d_T.get(6),1));
+	d_In.add(new ArcIn(d_P.get(16),d_T.get(6),1));
+	d_In.add(new ArcIn(d_P.get(8),d_T.get(8),1));
+	d_In.add(new ArcIn(d_P.get(18),d_T.get(8),1));
+	d_In.add(new ArcIn(d_P.get(8),d_T.get(7),1));
+	d_Out.add(new ArcOut(d_T.get(10),d_P.get(1),1));
+	d_Out.add(new ArcOut(d_T.get(10),d_P.get(12),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(1),4));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(0),1));
+	d_Out.add(new ArcOut(d_T.get(0),d_P.get(13),4));
+	d_Out.add(new ArcOut(d_T.get(3),d_P.get(6),1));
+	d_Out.add(new ArcOut(d_T.get(2),d_P.get(5),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(2),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(3),1));
+	d_Out.add(new ArcOut(d_T.get(1),d_P.get(14),1));
+	d_Out.add(new ArcOut(d_T.get(9),d_P.get(10),1));
+	d_Out.add(new ArcOut(d_T.get(9),d_P.get(3),1));
+	d_Out.add(new ArcOut(d_T.get(9),d_P.get(17),1));
+	d_Out.add(new ArcOut(d_T.get(4),d_P.get(4),1));
+	d_Out.add(new ArcOut(d_T.get(4),d_P.get(3),1));
+	d_Out.add(new ArcOut(d_T.get(4),d_P.get(15),1));
+	d_Out.add(new ArcOut(d_T.get(5),d_P.get(8),1));
+	d_Out.add(new ArcOut(d_T.get(6),d_P.get(7),1));
+	d_Out.add(new ArcOut(d_T.get(6),d_P.get(3),1));
+	d_Out.add(new ArcOut(d_T.get(6),d_P.get(16),1));
+	d_Out.add(new ArcOut(d_T.get(8),d_P.get(9),1));
+	d_Out.add(new ArcOut(d_T.get(8),d_P.get(3),1));
+	d_Out.add(new ArcOut(d_T.get(8),d_P.get(18),1));
+	d_Out.add(new ArcOut(d_T.get(7),d_P.get(11),1));
+	PetriNet d_Net = new PetriNet("lab5_2",d_P,d_T,d_In,d_Out);
+	PetriP.initNext();
+	PetriT.initNext();
+	ArcIn.initNext();
+	ArcOut.initNext();
+
+	return d_Net;
+}
 }
